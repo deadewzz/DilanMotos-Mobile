@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:padding="20dp"
+              android:gravity="center_vertical"
+              android:id="@+id/mainFormMoto">
+
+    <!-- Título principal emparejado con txtTitulo -->
+    <TextView
+            android:id="@+id/txtTitulo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Registrar Moto"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="24dp"
+            android:textAlignment="center"/>
+
+    <!-- Modelo de la Moto -->
+    <EditText
+            android:id="@+id/etModeloMoto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Modelo / Nombre de la Moto"
+            android:inputType="text"
+            android:layout_marginBottom="16dp"/>
+
+    <EditText
+            android:id="@+id/etCilindrajeMoto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Cilindraje (cc)"
+            android:inputType="numberDecimal" />
+
+    <!-- Año de la Moto -->
+    <EditText
+            android:id="@+id/etAnioMoto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Año (Ej: 2026)"
+            android:inputType="number"
+            android:layout_marginBottom="16dp"/>
+
+    <!-- Etiqueta informativa -->
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Selecciona la Marca:"
+            android:textSize="14sp"
+            android:layout_marginBottom="4dp"/>
+
+    <!-- Selector de Marcas emparejado con spnMarcas -->
+    <Spinner
+            android:id="@+id/spnMarcas"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginBottom="24dp"/>
+
+    <!-- Botón de acción emparejado con btnGuardar -->
+    <Button
+            android:id="@+id/btnGuardar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Guardar Moto"
+            android:layout_marginBottom="8dp"/>
+
+    <!-- Botón Cancelar -->
+    <Button
+            android:id="@+id/btnVolverAlMenuMoto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Cancelar y Volver"
+            android:backgroundTint="@android:color/darker_gray" />
+</LinearLayout>

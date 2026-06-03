@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <style name="Base.Theme.Ventas" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/dilan_primary</item>
+        <item name="android:windowBackground">@color/dilan_background</item>
+        <item name="colorSurface">@color/dilan_card_bg</item>
+    </style>
+
+    <style name="Theme.Ventas" parent="Base.Theme.Ventas" />
+
+</resources>

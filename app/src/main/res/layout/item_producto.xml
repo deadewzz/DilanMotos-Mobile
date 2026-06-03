@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="horizontal"
+              android:padding="16dp"
+              android:layout_marginBottom="8dp"
+              android:background="@android:drawable/dialog_holo_light_frame"
+              android:gravity="center_vertical">
+
+    <!-- Bloque de información del Producto -->
+    <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+        <!-- Nombre del Producto -->
+        <TextView
+                android:id="@+id/txtNombreProducto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nombre del Producto"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+        <!-- Precio del Producto -->
+        <TextView
+                android:id="@+id/txtPrecioProducto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Precio: $0.00"
+                android:textSize="14sp"
+                android:textColor="@android:color/black"
+                android:layout_marginTop="2dp" />
+
+        <!-- Descripción corta del Producto -->
+        <TextView
+                android:id="@+id/txtDescripcionProducto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Descripción corta del artículo"
+                android:textSize="12sp"
+                android:textColor="@android:color/darker_gray"
+                android:layout_marginTop="2dp" />
+    </LinearLayout>
+
+    <!-- Botón de Acción: Editar Producto -->
+    <ImageView
+            android:id="@+id/btnEditarProducto"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:padding="8dp"
+            android:src="@android:drawable/ic_menu_edit"
+            android:contentDescription="Editar"
+            android:layout_marginEnd="8dp"/>
+
+    <!-- Botón de Acción: Eliminar Producto -->
+    <ImageView
+            android:id="@+id/btnEliminarProducto"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:padding="8dp"
+            android:src="@android:drawable/ic_menu_delete"
+            android:contentDescription="Eliminar"
+            app:tint="@android:color/holo_red_light" />
+
+</LinearLayout>

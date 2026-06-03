@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="20dp"
+        android:gravity="center_vertical"
+        android:id="@+id/mainFormCotizacion">
+
+    <TextView
+            android:id="@+id/txtTituloFormularioCotizacion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Crear Cotización"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="24dp"
+            android:textAlignment="center"/>
+
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Seleccione un Producto:"
+            android:textSize="14sp"
+            android:textColor="@android:color/darker_gray"
+            android:layout_marginBottom="4dp"/>
+
+    <Spinner
+            android:id="@+id/spProductoCotizacion"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginBottom="16dp"/>
+
+    <EditText
+            android:id="@+id/etCantidadCotizacion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Cantidad"
+            android:inputType="number"
+            android:layout_marginBottom="16dp"/>
+
+    <EditText
+            android:id="@+id/etPrecioUnitarioCotizacion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Precio Unitario"
+            android:inputType="numberDecimal"
+            android:layout_marginBottom="16dp"/>
+
+    <EditText
+            android:id="@+id/etFechaCotizacionForm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Fecha (AAAA-MM-DD)"
+            android:inputType="date"
+            android:layout_marginBottom="16dp"/>
+
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Estado del Producto:"
+            android:textSize="14sp"
+            android:textColor="@android:color/darker_gray"
+            android:layout_marginBottom="4dp"/>
+
+    <Spinner
+            android:id="@+id/spEstadoCotizacion"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginBottom="24dp"/>
+
+    <Button
+            android:id="@+id/btnGuardarCotizacion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Guardar Cotización" />
+
+    <Button
+            android:id="@+id/btnVolverAlMenuCotizacion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Cancelar y Volver"
+            android:backgroundTint="@android:color/darker_gray" />
+</LinearLayout>

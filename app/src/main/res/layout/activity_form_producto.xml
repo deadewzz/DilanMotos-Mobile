@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:padding="20dp"
+              android:gravity="center_vertical"
+              android:id="@+id/mainForm">
+
+    <!-- Título dinámico (Cambiará a "Editar Producto" si se le pasan extras) -->
+    <TextView
+            android:id="@+id/txtTituloFormulario"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Crear Producto"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="24dp"
+            android:textAlignment="center"/>
+
+    <!-- Nombre del Producto -->
+    <EditText
+            android:id="@+id/etNombreProducto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nombre del producto"
+            android:inputType="text"
+            android:layout_marginBottom="16dp"/>
+
+    <!-- Descripción del Producto -->
+    <EditText
+            android:id="@+id/etDescripcionProducto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Descripción"
+            android:inputType="textMultiLine"
+            android:layout_marginBottom="16dp"/>
+
+    <!-- Precio (Limitado a números con decimales) -->
+    <EditText
+            android:id="@+id/etPrecioProducto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Precio"
+            android:inputType="numberDecimal"
+            android:layout_marginBottom="16dp"/>
+
+    <!-- ID Categoría (Temporalmente numérico para interactuar con la BD) -->
+    <EditText
+            android:id="@+id/etIdCategoria"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="ID Categoría"
+            android:inputType="number"
+            android:layout_marginBottom="16dp"/>
+
+    <!-- ID Marca (Temporalmente numérico para interactuar con la BD) -->
+    <EditText
+            android:id="@+id/etIdMarca"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="ID Marca"
+            android:inputType="number"
+            android:layout_marginBottom="16dp"/>
+
+    <!-- URL de la Imagen -->
+    <EditText
+            android:id="@+id/etImagenUrl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="URL de la imagen"
+            android:inputType="textUri"
+            android:layout_marginBottom="24dp"/>
+
+    <!-- Botón de acción -->
+    <Button
+            android:id="@+id/btnGuardarProducto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Guardar Producto" />
+
+    <Button
+            android:id="@+id/btnVolverAlMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Cancelar y Volver"
+            android:backgroundTint="@android:color/darker_gray" />
+</LinearLayout>
