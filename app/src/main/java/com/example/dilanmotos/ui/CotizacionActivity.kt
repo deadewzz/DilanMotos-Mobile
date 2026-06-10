@@ -1,5 +1,6 @@
 package com.example.dilanmotos.ui
 
+import android.content.Context // Importación necesaria para SharedPreferences
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
@@ -96,7 +97,16 @@ class CotizacionActivity : AppCompatActivity() {
 
     // --- Eliminar cotización desde la API ---
     private fun eliminarCotizacion(idCotizacion: Int) {
-        ApiClient.apiService.eliminarCotizacion(idCotizacion).enqueue(object : Callback<Void> {
+        // 1. Recuperar el token desde SharedPreferences globales
+        val sharedPreferences = applicationContext.getSharedPreferences("DilanMotosPrefs", Context.MODE_PRIVATE)
+        val tokenGuardado = sharedPreferences.getString("token_sesion", "") ?: ""
+
+        // 2. SALVAVIDAS TEMPORAL: Si el login no guardó token, inyectamos uno falso con formato Bearer
+        // para que la API reciba datos y puedas testear si tu backend rechaza o acepta el ID.
+        val tokenFinal = if (tokenGuardado.isEmpty()) "Bearer TokenTemporalFalso" else "Bearer $tokenGuardado"
+
+        // 3. Se envían ambos parámetros requeridos por la interfaz de Retrofit
+        ApiClient.apiService.eliminarCotizacion(tokenFinal, idCotizacion).enqueue(object : Callback<Void> {
             override fun onResponse(call: Call<Void>, response: Response<Void>) {
                 if (response.isSuccessful) {
                     Toast.makeText(this@CotizacionActivity, "Cotización eliminada correctamente", Toast.LENGTH_SHORT).show()

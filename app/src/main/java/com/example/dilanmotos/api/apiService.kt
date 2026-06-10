@@ -5,6 +5,7 @@ import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
+import retrofit2.http.Header
 import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Path
@@ -76,4 +77,40 @@ interface ApiService {
 
     @POST("api/ia/consultar")
     fun consultarIA(@Body request: ConsultaRequest): Call<IaResponse>
+
+    // ==========================================
+
+// ENDPOINTS DE COTIZACION
+
+// ==========================================
+
+
+
+    @GET("api/cotizaciones")
+
+    fun obtenerCotizacion(): Call<List<Cotizacion>>
+
+
+
+    @POST("api/cotizaciones")
+
+    fun crearCotizacion(@Body cotizacion: Cotizacion): Call<Cotizacion>
+
+
+
+    @PUT("api/cotizaciones/{id}")
+
+    fun actualizarCotizacion(@Path("id") id: Int, @Body cotizacion: Cotizacion): Call<Cotizacion>
+
+
+
+    @DELETE("api/cotizaciones/{id}")
+
+    fun eliminarCotizacion(
+
+        @Header("Authorization") token: String,
+
+        @Path("id") id: Int
+
+    ): Call<Void>
 }

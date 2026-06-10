@@ -6,6 +6,5 @@ import com.example.dilanmotos.api.ApiClient
 class DilanMotosApp : Application() {
     override fun onCreate() {
         super.onCreate()
-        ApiClient.init(this)
     }
 }

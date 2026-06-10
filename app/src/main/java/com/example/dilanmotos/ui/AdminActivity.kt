@@ -61,7 +61,8 @@ class AdminActivity : AppCompatActivity() {
         }
     }
 
+    @Suppress("DEPRECATION")
     override fun onBackPressed() {
-        // Bloquear retroceso igual que en HomeActivity
-    }
+        super.onBackPressed()
 }
+    }

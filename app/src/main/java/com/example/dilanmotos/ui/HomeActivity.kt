@@ -59,7 +59,8 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
+    @Suppress("DEPRECATION") // <-- Agrega esto para decirle al compilador que ignore el aviso
     override fun onBackPressed() {
-        // Bloquear retroceso
+        super.onBackPressed()
     }
 }
