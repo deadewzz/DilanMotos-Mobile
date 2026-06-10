@@ -1,5 +1,6 @@
 package com.example.dilanmotos
 
+import android.content.Context // Importante para las SharedPreferences
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/mainFormCotizacion"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="20dp"
-        android:gravity="center_vertical"
-        android:id="@+id/mainFormCotizacion">
+        android:gravity="center_vertical">
 
     <TextView
             android:id="@+id/txtTituloFormularioCotizacion"
@@ -29,29 +29,65 @@
             android:id="@+id/spProductoCotizacion"
             android:layout_width="match_parent"
             android:layout_height="48dp"
+            android:layout_marginBottom="8dp"/>
+
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Precio Unitario ($):"
+            android:textSize="14sp"
+            android:textColor="@android:color/darker_gray"
+            android:layout_marginBottom="4dp"/>
+
+    <EditText
+            android:id="@+id/etPrecioUnitarioCotizacionForm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="0.0"
+            android:inputType="numberDecimal"
+            android:enabled="false"
+            android:focusable="false"
+            android:clickable="false"
+            android:textColor="@android:color/darker_gray"
+            android:layout_marginBottom="4dp"/>
+
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Se toma automáticamente del producto seleccionado."
+            android:textSize="12sp"
+            android:textColor="@android:color/holo_orange_dark"
             android:layout_marginBottom="16dp"/>
+
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Cantidad:"
+            android:textSize="14sp"
+            android:textColor="@android:color/darker_gray"
+            android:layout_marginBottom="4dp"/>
 
     <EditText
             android:id="@+id/etCantidadCotizacion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Cantidad"
+            android:hint="Ej: 2"
             android:inputType="number"
             android:layout_marginBottom="16dp"/>
 
-    <EditText
-            android:id="@+id/etPrecioUnitarioCotizacion"
+    <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Precio Unitario"
-            android:inputType="numberDecimal"
-            android:layout_marginBottom="16dp"/>
+            android:text="Fecha (Obligatorio: AAAA-MM-DD):"
+            android:textSize="14sp"
+            android:textColor="@android:color/darker_gray"
+            android:layout_marginBottom="4dp"/>
 
     <EditText
             android:id="@+id/etFechaCotizacionForm"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Fecha (AAAA-MM-DD)"
+            android:hint="Ej: 2026-06-10"
             android:inputType="date"
             android:layout_marginBottom="16dp"/>
 
@@ -67,13 +103,14 @@
             android:id="@+id/spEstadoCotizacion"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:layout_marginBottom="24dp"/>
+            android:layout_marginBottom="28dp"/>
 
     <Button
             android:id="@+id/btnGuardarCotizacion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Guardar Cotización" />
+            android:text="Guardar Cotización"
+            android:layout_marginBottom="8dp"/>
 
     <Button
             android:id="@+id/btnVolverAlMenuCotizacion"

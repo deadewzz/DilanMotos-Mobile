@@ -1,6 +1,6 @@
 package com.example.dilanmotos.ui
 
-import android.content.Context // Importación necesaria para SharedPreferences
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
@@ -66,7 +66,11 @@ class CotizacionActivity : AppCompatActivity() {
             onDeleteClick = { cotizacionSeleccionada ->
                 cotizacionSeleccionada.idCotizacion?.let { id ->
                     eliminarCotizacion(id)
-                } ?: Toast.makeText(this, "No se puede eliminar una cotización sin ID", Toast.LENGTH_SHORT).show()
+                } ?: Toast.makeText(
+                    this,
+                    "No se puede eliminar una cotización sin ID",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         )
         recyclerView.adapter = adapter
@@ -80,17 +84,28 @@ class CotizacionActivity : AppCompatActivity() {
     // --- Obtener cotizaciones desde la API ---
     private fun cargarCotizaciones() {
         ApiClient.apiService.obtenerCotizacion().enqueue(object : Callback<List<Cotizacion>> {
-            override fun onResponse(call: Call<List<Cotizacion>>, response: Response<List<Cotizacion>>) {
+            override fun onResponse(
+                call: Call<List<Cotizacion>>,
+                response: Response<List<Cotizacion>>
+            ) {
                 if (response.isSuccessful && response.body() != null) {
                     listaCotizaciones = response.body()!!
                     adapter.actualizarLista(listaCotizaciones)
                 } else {
-                    Toast.makeText(this@CotizacionActivity, "Error de servidor: ${response.code()}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this@CotizacionActivity,
+                        "Error de servidor: ${response.code()}",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
 
             override fun onFailure(call: Call<List<Cotizacion>>, t: Throwable) {
-                Toast.makeText(this@CotizacionActivity, "Error de conexión: ${t.message}", Toast.LENGTH_LONG).show()
+                Toast.makeText(
+                    this@CotizacionActivity,
+                    "Error de conexión: ${t.message}",
+                    Toast.LENGTH_LONG
+                ).show()
             }
         })
     }

@@ -84,33 +84,18 @@ interface ApiService {
 
 // ==========================================
 
-
-
     @GET("api/cotizaciones")
-
     fun obtenerCotizacion(): Call<List<Cotizacion>>
 
-
-
     @POST("api/cotizaciones")
-
     fun crearCotizacion(@Body cotizacion: Cotizacion): Call<Cotizacion>
 
-
-
     @PUT("api/cotizaciones/{id}")
-
     fun actualizarCotizacion(@Path("id") id: Int, @Body cotizacion: Cotizacion): Call<Cotizacion>
 
-
-
     @DELETE("api/cotizaciones/{id}")
-
     fun eliminarCotizacion(
-
         @Header("Authorization") token: String,
-
         @Path("id") id: Int
-
     ): Call<Void>
 }

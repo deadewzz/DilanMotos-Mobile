@@ -4,13 +4,13 @@ import com.google.gson.annotations.SerializedName
 
 data class Cotizacion(
 
-    @SerializedName("id_cotizacion")
+    @SerializedName("idCotizacion")
     val idCotizacion: Int? = null,
 
-    @SerializedName("id_usuario")
+    @SerializedName("idUsuario")
     val idUsuario: Int,
 
-    @SerializedName("id_producto")
+    @SerializedName("idProducto")
     val idProducto: Int,
 
     @SerializedName("producto")

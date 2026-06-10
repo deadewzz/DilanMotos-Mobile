@@ -3,7 +3,7 @@ package com.example.dilanmotos.model
 import com.google.gson.annotations.SerializedName
 
 data class Usuario(
-    @SerializedName("idUsuario")
+    @SerializedName("idusuario")
     val idUsuario: Int?,
 
     @SerializedName("nombre")
