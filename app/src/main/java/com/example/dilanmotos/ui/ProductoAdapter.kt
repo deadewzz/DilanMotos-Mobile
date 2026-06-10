@@ -11,12 +11,12 @@ import com.example.dilanmotos.model.Producto
 
 class ProductoAdapter(
     private var productos: List<Producto>,
+    private val esAdmin: Boolean,
     private val onEditClick: (Producto) -> Unit,
     private val onDeleteClick: (Producto) -> Unit
 ) : RecyclerView.Adapter<ProductoAdapter.ProductoViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductoViewHolder {
-        // Inflamos el diseño correspondiente a un solo producto
         val vista = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_producto, parent, false)
         return ProductoViewHolder(vista)
@@ -25,25 +25,28 @@ class ProductoAdapter(
     override fun onBindViewHolder(holder: ProductoViewHolder, position: Int) {
         val producto = productos[position]
 
-        // Asignamos los datos del producto a la vista
         holder.txtNombre.text = producto.nombre
         holder.txtPrecio.text = "Precio: $${String.format("%.2f", producto.precio)}"
         holder.txtDescripcion.text = producto.descripcion ?: "Sin descripción"
 
-        // Eventos de clic para editar y eliminar
-        holder.btnEditar.setOnClickListener { onEditClick(producto) }
-        holder.btnEliminar.setOnClickListener { onDeleteClick(producto) }
+        if (esAdmin) {
+            holder.btnEditar.visibility = View.VISIBLE
+            holder.btnEliminar.visibility = View.VISIBLE
+            holder.btnEditar.setOnClickListener { onEditClick(producto) }
+            holder.btnEliminar.setOnClickListener { onDeleteClick(producto) }
+        } else {
+            holder.btnEditar.visibility = View.GONE
+            holder.btnEliminar.visibility = View.GONE
+        }
     }
 
     override fun getItemCount(): Int = productos.size
 
-    // Función para refrescar la lista cuando cambien los datos en la base de datos
     fun actualizarLista(nuevaLista: List<Producto>) {
         this.productos = nuevaLista
         notifyDataSetChanged()
     }
 
-    // Contenedor de las vistas asignadas a cada elemento
     class ProductoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val txtNombre: TextView = itemView.findViewById(R.id.txtNombreProducto)
         val txtPrecio: TextView = itemView.findViewById(R.id.txtPrecioProducto)

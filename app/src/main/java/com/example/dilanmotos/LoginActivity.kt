@@ -11,7 +11,9 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.dilanmotos.api.ApiClient
 import com.example.dilanmotos.model.LoginRequest
-import com.example.dilanmotos.model.Usuario
+import com.example.dilanmotos.model.LoginResponse
+import com.example.dilanmotos.session.SessionManager
+import com.example.dilanmotos.ui.HomeActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -21,11 +23,20 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var etCorreo: EditText
     private lateinit var etContrasena: EditText
     private lateinit var btnIngresar: Button
+    private lateinit var sessionManager: SessionManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_login)
+
+        sessionManager = SessionManager(this)
+
+        // Si ya hay sesión activa, ir directo al home
+        if (sessionManager.isSesionActiva()) {
+            irAlHome()
+            return
+        }
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -33,49 +44,76 @@ class LoginActivity : AppCompatActivity() {
             insets
         }
 
-        // 1. Inicializar los componentes de la interfaz
         etCorreo = findViewById(R.id.etCorreoLogin)
         etContrasena = findViewById(R.id.etContrasenaLogin)
         btnIngresar = findViewById(R.id.btnIngresar)
 
-        // 2. Configurar el evento de clic del botón de ingreso
-        btnIngresar.setOnClickListener {
-            ejecutarLogin()
-        }
+        btnIngresar.setOnClickListener { ejecutarLogin() }
     }
 
     private fun ejecutarLogin() {
         val correo = etCorreo.text.toString().trim()
         val contrasena = etContrasena.text.toString().trim()
 
-        // Validación simple de campos vacíos
         if (correo.isEmpty() || contrasena.isEmpty()) {
             Toast.makeText(this, "Por favor, completa todos los campos", Toast.LENGTH_SHORT).show()
             return
         }
 
-        // Crear el objeto con las credenciales requeridas por el Backend
-        val request = LoginRequest(correo, contrasena)
+        btnIngresar.isEnabled = false
+        btnIngresar.text = "Ingresando..."
 
-        // Ejecutar la petición HTTP a través de Retrofit
-        ApiClient.apiService.login(request).enqueue(object : Callback<Usuario> {
-            override fun onResponse(call: Call<Usuario>, response: Response<Usuario>) {
-                if (response.isSuccessful && response.body() != null) {
-                    val usuarioLogueado = response.body()!!
+        ApiClient.apiService.login(LoginRequest(correo, contrasena))
+            .enqueue(object : Callback<LoginResponse> {
+                override fun onResponse(
+                    call: Call<LoginResponse>,
+                    response: Response<LoginResponse>
+                ) {
+                    btnIngresar.isEnabled = true
+                    btnIngresar.text = "Ingresar"
 
-                    Toast.makeText(this@LoginActivity, "Bienvenido ${usuarioLogueado.nombre}", Toast.LENGTH_SHORT).show()
+                    if (response.isSuccessful && response.body() != null) {
+                        val loginData = response.body()!!
 
-                    val intent = Intent(this@LoginActivity, MainActivity::class.java)
-                    startActivity(intent)
-                    finish() // Cierra el LoginActivity de forma segura
-                } else {
-                    Toast.makeText(this@LoginActivity, "Correo o contraseña incorrectos", Toast.LENGTH_SHORT).show()
+                        sessionManager.guardarSesion(
+                            idUsuario = loginData.idUsuario ?: -1,
+                            nombre = loginData.nombre,
+                            rol = loginData.rol,
+                            token = loginData.token
+                        )
+
+                        Toast.makeText(
+                            this@LoginActivity,
+                            "Bienvenido ${loginData.nombre}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+
+                        irAlHome()
+                        finish()
+
+                    } else {
+                        Toast.makeText(
+                            this@LoginActivity,
+                            "Correo o contraseña incorrectos",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
                 }
-            }
 
-            override fun onFailure(call: Call<Usuario>, t: Throwable) {
-                Toast.makeText(this@LoginActivity, "Error de conexión con el servidor", Toast.LENGTH_LONG).show()
-            }
-        })
+                override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
+                    btnIngresar.isEnabled = true
+                    btnIngresar.text = "Ingresar"
+                    Toast.makeText(
+                        this@LoginActivity,
+                        "Error de conexión: ${t.message}",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+            })
+    }
+
+    private fun irAlHome() {
+        startActivity(Intent(this, HomeActivity::class.java))
+        finish()
     }
 }

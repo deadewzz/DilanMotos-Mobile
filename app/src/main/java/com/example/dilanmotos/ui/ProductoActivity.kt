@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.dilanmotos.R
 import com.example.dilanmotos.model.Producto
 import com.example.dilanmotos.api.ApiClient
+import com.example.dilanmotos.session.SessionManager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import retrofit2.Call
 import retrofit2.Callback
@@ -23,7 +24,9 @@ class ProductoActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: ProductoAdapter
     private lateinit var btnNuevoProducto: FloatingActionButton
+    private lateinit var sessionManager: SessionManager
     private var listaProductos: List<Producto> = ArrayList()
+    private var esAdmin: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,22 +39,23 @@ class ProductoActivity : AppCompatActivity() {
             insets
         }
 
-        // 1. Inicializar componentes usando los IDs del XML de productos
+        sessionManager = SessionManager(this)
+        esAdmin = sessionManager.isAdmin()
+
         recyclerView = findViewById(R.id.recyclerViewProductos)
         recyclerView.layoutManager = LinearLayoutManager(this)
         btnNuevoProducto = findViewById(R.id.btnNuevoProducto)
 
-        // 2. Evento para abrir el formulario (Crear)
+        btnNuevoProducto.visibility = if (esAdmin) View.VISIBLE else View.GONE
+
         btnNuevoProducto.setOnClickListener {
-            val intent = Intent(this, FormProductoActivity::class.java)
-            startActivity(intent)
+            startActivity(Intent(this, FormProductoActivity::class.java))
         }
 
-        // 3. Configurar adaptador con acciones (Editar y Eliminar)
         adapter = ProductoAdapter(
             listaProductos,
+            esAdmin = esAdmin,
             onEditClick = { productoSeleccionado ->
-                // Mandar datos actuales de la tabla al formulario en modo edición
                 val intent = Intent(this, FormProductoActivity::class.java).apply {
                     putExtra("id_producto", productoSeleccionado.idProducto)
                     putExtra("id_categoria", productoSeleccionado.idCategoria)
@@ -74,37 +78,32 @@ class ProductoActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        cargarProducto() // Refresca automáticamente la lista al volver del formulario
+        cargarProducto()
     }
 
-    // --- Obtener productos desde la API ---
     private fun cargarProducto() {
-        // Llama a obtenerProducto() en singular tal como lo tienes en tu ApiService.kt actual
         ApiClient.apiService.obtenerProducto().enqueue(object : Callback<List<Producto>> {
             override fun onResponse(call: Call<List<Producto>>, response: Response<List<Producto>>) {
                 if (response.isSuccessful && response.body() != null) {
-                    listaProductos = response.body()!! // Corregido espaciado
+                    listaProductos = response.body()!!
                     adapter.actualizarLista(listaProductos)
                 } else {
-                    // MEJORA EXTRA: Ahora te dirá qué código de error tira el servidor (ej: 404, 500, 400)
                     Toast.makeText(this@ProductoActivity, "Error de servidor: ${response.code()}", Toast.LENGTH_SHORT).show()
                 }
             }
 
             override fun onFailure(call: Call<List<Producto>>, t: Throwable) {
-                // Muestra la excepción exacta de red (ej: Connection refused, Timeout, etc.)
                 Toast.makeText(this@ProductoActivity, "Error de conexión: ${t.message}", Toast.LENGTH_LONG).show()
             }
         })
     }
 
-    // --- Eliminar producto desde la API ---
     private fun eliminarProducto(idProducto: Int) {
         ApiClient.apiService.eliminarProducto(idProducto).enqueue(object : Callback<Void> {
             override fun onResponse(call: Call<Void>, response: Response<Void>) {
                 if (response.isSuccessful) {
                     Toast.makeText(this@ProductoActivity, "Producto eliminado correctamente", Toast.LENGTH_SHORT).show()
-                    cargarProducto() // Recarga la lista para que desaparezca el ítem borrado
+                    cargarProducto()
                 } else {
                     Toast.makeText(this@ProductoActivity, "No se pudo eliminar: ${response.code()}", Toast.LENGTH_SHORT).show()
                 }

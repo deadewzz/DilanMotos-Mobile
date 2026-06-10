@@ -2,6 +2,7 @@ package com.example.dilanmotos.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.dilanmotos.R
 import com.example.dilanmotos.model.Moto
 import com.example.dilanmotos.api.ApiClient
+import com.example.dilanmotos.session.SessionManager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import retrofit2.Call
 import retrofit2.Callback
@@ -22,7 +24,9 @@ class MotoActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: MotoAdapter
     private lateinit var btnNuevaMoto: FloatingActionButton
+    private lateinit var sessionManager: SessionManager
     private var listaMotos: List<Moto> = ArrayList()
+    private var esAdmin: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,33 +39,34 @@ class MotoActivity : AppCompatActivity() {
             insets
         }
 
-        // 1. Inicializar componentes usando los IDs del XML de Motos
+        // Verificar rol
+        sessionManager = SessionManager(this)
+        esAdmin = sessionManager.isAdmin()
+
         recyclerView = findViewById(R.id.recyclerViewMotos)
         recyclerView.layoutManager = LinearLayoutManager(this)
         btnNuevaMoto = findViewById(R.id.btnNuevaMoto)
 
-        // 2. Evento para abrir el formulario (Crear)
+        // El FAB de nueva moto solo visible para admin
+        btnNuevaMoto.visibility = if (esAdmin) View.VISIBLE else View.GONE
+
         btnNuevaMoto.setOnClickListener {
-            val intent = Intent(this, FormMotoActivity::class.java)
-            startActivity(intent)
+            startActivity(Intent(this, FormMotoActivity::class.java))
         }
 
-        // 3. Configurar adaptador con acciones (Editar y Eliminar)
         adapter = MotoAdapter(
             listaMotos,
+            esAdmin = esAdmin,
             onEditClick = { motoSeleccionada ->
-                // Mandar datos actuales del objeto al formulario en modo edición
                 val intent = Intent(this, FormMotoActivity::class.java).apply {
-                    putExtra("ID_MOTO", motoSeleccionada.idMoto) // Usando idMoto real
+                    putExtra("ID_MOTO", motoSeleccionada.idMoto)
                     putExtra("MODELO_MOTO", motoSeleccionada.modelo)
-                    putExtra("CILINDRAJE_MOTO", motoSeleccionada.cilindraje ?: 0.0) // ✅
-                    // Controlamos la nulidad de idMarca de forma segura usando ?: -1
+                    putExtra("CILINDRAJE_MOTO", motoSeleccionada.cilindraje ?: 0.0)
                     putExtra("ID_MARCA_MOTO", motoSeleccionada.marca?.idMarca ?: -1)
                 }
                 startActivity(intent)
             },
             onDeleteClick = { motoSeleccionada ->
-
                 val id = motoSeleccionada.idMoto
                 if (id != null && id > 0) {
                     eliminarMoto(id)
@@ -75,17 +80,14 @@ class MotoActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        cargarMotos() // Refresca automáticamente la lista al volver del formulario
+        cargarMotos()
     }
 
-    // --- Obtener motos desde la API ---
     private fun cargarMotos() {
         ApiClient.apiService.obtenerMotos().enqueue(object : Callback<List<Moto>> {
             override fun onResponse(call: Call<List<Moto>>, response: Response<List<Moto>>) {
                 if (response.isSuccessful && response.body() != null) {
                     listaMotos = response.body()!!
-
-                    // Verificación de seguridad por ciclo de vida
                     if (::adapter.isInitialized) {
                         adapter.actualizarLista(listaMotos)
                     }
@@ -100,13 +102,12 @@ class MotoActivity : AppCompatActivity() {
         })
     }
 
-    // --- Eliminar motos desde la API ---
     private fun eliminarMoto(idMoto: Int) {
         ApiClient.apiService.eliminarMoto(idMoto).enqueue(object : Callback<Void> {
             override fun onResponse(call: Call<Void>, response: Response<Void>) {
                 if (response.isSuccessful) {
                     Toast.makeText(this@MotoActivity, "Moto eliminada correctamente", Toast.LENGTH_SHORT).show()
-                    cargarMotos() // Recarga la lista para aplicar el borrado en tiempo real
+                    cargarMotos()
                 } else {
                     Toast.makeText(this@MotoActivity, "No se pudo eliminar: ${response.code()}", Toast.LENGTH_SHORT).show()
                 }

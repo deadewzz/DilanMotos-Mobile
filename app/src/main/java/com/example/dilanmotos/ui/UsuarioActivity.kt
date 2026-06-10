@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.dilanmotos.R
 import com.example.dilanmotos.model.Usuario
 import com.example.dilanmotos.api.ApiClient
+import com.example.dilanmotos.session.SessionManager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import retrofit2.Call
 import retrofit2.Callback
@@ -23,7 +24,9 @@ class UsuarioActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: UsuarioAdapter
     private lateinit var btnNuevoUsuario: FloatingActionButton
+    private lateinit var sessionManager: SessionManager
     private var listaUsuarios: List<Usuario> = ArrayList()
+    private var esAdmin: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,22 +39,24 @@ class UsuarioActivity : AppCompatActivity() {
             insets
         }
 
-        // 1. Inicializar componentes
+        sessionManager = SessionManager(this)
+        esAdmin = sessionManager.isAdmin()
+
         recyclerView = findViewById(R.id.recyclerViewUsuarios)
         recyclerView.layoutManager = LinearLayoutManager(this)
         btnNuevoUsuario = findViewById(R.id.btnNuevoUsuario)
 
-        // 2. Evento para abrir el formulario (Crear)
+        // Usuarios solo accesible desde AdminActivity, pero por seguridad igual se oculta el FAB
+        btnNuevoUsuario.visibility = if (esAdmin) View.VISIBLE else View.GONE
+
         btnNuevoUsuario.setOnClickListener {
-            val intent = Intent(this, FormUsuarioActivity::class.java)
-            startActivity(intent)
+            startActivity(Intent(this, FormUsuarioActivity::class.java))
         }
 
-        // 3. Configurar adaptador con acciones (Editar y Eliminar)
         adapter = UsuarioAdapter(
             listaUsuarios,
+            esAdmin = esAdmin,
             onEditClick = { usuarioSeleccionado ->
-                // Mandar datos actuales al formulario en modo edición
                 val intent = Intent(this, FormUsuarioActivity::class.java).apply {
                     putExtra("id_usuario", usuarioSeleccionado.idUsuario)
                     putExtra("nombre", usuarioSeleccionado.nombre)
@@ -71,10 +76,9 @@ class UsuarioActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        cargarUsuarios() // Refresca automáticamente al volver del formulario
+        cargarUsuarios()
     }
 
-    // --- Obtener usuarios ---
     private fun cargarUsuarios() {
         ApiClient.apiService.obtenerUsuarios().enqueue(object : Callback<List<Usuario>> {
             override fun onResponse(call: Call<List<Usuario>>, response: Response<List<Usuario>>) {
@@ -92,7 +96,6 @@ class UsuarioActivity : AppCompatActivity() {
         })
     }
 
-    // --- Eliminar usuario ---
     private fun eliminarUsuario(idUsuario: Int) {
         ApiClient.apiService.eliminarUsuario(idUsuario).enqueue(object : Callback<Void> {
             override fun onResponse(call: Call<Void>, response: Response<Void>) {

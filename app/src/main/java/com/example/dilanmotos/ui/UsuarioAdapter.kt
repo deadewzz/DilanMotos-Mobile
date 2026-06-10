@@ -11,6 +11,7 @@ import com.example.dilanmotos.model.Usuario
 
 class UsuarioAdapter(
     private var usuarios: List<Usuario>,
+    private val esAdmin: Boolean,
     private val onEditClick: (Usuario) -> Unit,
     private val onDeleteClick: (Usuario) -> Unit
 ) : RecyclerView.Adapter<UsuarioAdapter.UsuarioViewHolder>() {
@@ -28,8 +29,15 @@ class UsuarioAdapter(
         holder.txtCorreo.text = usuario.correo
         holder.txtRol.text = "Rol: ${usuario.rol}"
 
-        holder.btnEditar.setOnClickListener { onEditClick(usuario) }
-        holder.btnEliminar.setOnClickListener { onDeleteClick(usuario) }
+        if (esAdmin) {
+            holder.btnEditar.visibility = View.VISIBLE
+            holder.btnEliminar.visibility = View.VISIBLE
+            holder.btnEditar.setOnClickListener { onEditClick(usuario) }
+            holder.btnEliminar.setOnClickListener { onDeleteClick(usuario) }
+        } else {
+            holder.btnEditar.visibility = View.GONE
+            holder.btnEliminar.visibility = View.GONE
+        }
     }
 
     override fun getItemCount(): Int = usuarios.size

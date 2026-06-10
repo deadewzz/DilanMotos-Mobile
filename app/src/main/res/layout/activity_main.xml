@@ -61,38 +61,6 @@
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/btnSeccionMoto"
-                    android:layout_width="0dp"
-                    android:layout_height="150dp"
-                    android:layout_columnWeight="1"
-                    android:layout_margin="8dp"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:foreground="?attr/selectableItemBackground"
-                    app:cardBackgroundColor="#FFFFFF"
-                    app:cardCornerRadius="16dp"
-                    app:cardElevation="2dp">
-                <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:orientation="vertical">
-                    <ImageView
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:src="@android:drawable/ic_menu_directions"
-                            app:tint="#5C6BC0" />
-                    <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="12dp"
-                            android:text="Motos"
-                            android:textColor="#000000"
-                            android:textStyle="bold" />
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-            <com.google.android.material.card.MaterialCardView
                     android:id="@+id/btnSeccionProducto"
                     android:layout_width="0dp"
                     android:layout_height="150dp"
@@ -157,7 +125,7 @@
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/btnSeccionCotizacion"
+                    android:id="@+id/btnSeccionMoto"
                     android:layout_width="0dp"
                     android:layout_height="150dp"
                     android:layout_columnWeight="1"
@@ -182,7 +150,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="12dp"
-                            android:text="Cotizacion"
+                            android:text="Motos"
                             android:textColor="#000000"
                             android:textStyle="bold" />
                 </LinearLayout>

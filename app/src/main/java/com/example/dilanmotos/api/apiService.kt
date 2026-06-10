@@ -1,13 +1,6 @@
 package com.example.dilanmotos.api
 
-import com.example.dilanmotos.model.IaResponse
-import com.example.dilanmotos.model.Marca
-import com.example.dilanmotos.model.Producto
-import com.example.dilanmotos.model.Usuario
-import com.example.dilanmotos.model.LoginRequest
-import com.example.dilanmotos.model.Moto
-import com.example.dilanmotos.model.Cotizacion
-import com.example.dilanmotos.model.ConsultaRequest
+import com.example.dilanmotos.model.*
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.DELETE
@@ -22,7 +15,7 @@ interface ApiService {
     // ENDPOINTS DE USUARIOS
     // ==========================================
     @POST("api/usuarios/login")
-    fun login(@Body request: LoginRequest): Call<Usuario>
+    fun login(@Body request: LoginRequest): Call<LoginResponse>
 
     @GET("api/usuarios")
     fun obtenerUsuarios(): Call<List<Usuario>>
@@ -83,21 +76,4 @@ interface ApiService {
 
     @POST("api/ia/consultar")
     fun consultarIA(@Body request: ConsultaRequest): Call<IaResponse>
-
-    // ==========================================
-    // ENDPOINTS DE COTIZACION
-    // ==========================================
-
-    @GET("api/cotizaciones")
-    fun obtenerCotizacion(): Call<List<Cotizacion>>
-
-    @POST("api/cotizaciones")
-    fun crearCotizacion(@Body cotizacion: Cotizacion): Call<Cotizacion>
-
-    @PUT("api/cotizaciones/{id}")
-    fun actualizarCotizacion(@Path("id") id: Int, @Body cotizacion: Cotizacion): Call<Cotizacion>
-
-    @DELETE("api/cotizacionse/{id}")
-    fun eliminarCotizacion(@Path("id") id: Int): Call<Void>
-
 }
