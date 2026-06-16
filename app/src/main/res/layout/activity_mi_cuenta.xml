@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#F0F2F5"
+        android:fillViewport="true">
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+        <!-- FONDO SUPERIOR AZUL -->
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="140dp"
+                android:background="#1E1B4B">
+
+            <!-- Botón Volver estilo flecha arriba a la izquierda -->
+            <Button
+                    android:id="@+id/btnCuentaVolver"
+                    android:layout_width="wrap_content"
+                    android:layout_height="36dp"
+                    android:layout_margin="16dp"
+                    android:text="← Volver"
+                    android:textColor="#FFFFFF"
+                    android:textSize="12sp"
+                    android:backgroundTint="#312E81"
+                    android:stateListAnimator="@null" />
+        </RelativeLayout>
+
+        <!-- TARJETA DE PERFIL (FLOTANTE) -->
+        <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="-50dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="6dp">
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:padding="20dp"
+                    android:background="#FFFFFF">
+
+                <!-- Avatar Falso / Cuadro de Foto -->
+                <androidx.cardview.widget.CardView
+                        android:layout_width="64dp"
+                        android:layout_height="64dp"
+                        app:cardCornerRadius="12dp"
+                        app:cardElevation="0dp"
+                        app:cardBackgroundColor="#F3F4F6">
+
+                    <TextView
+                            android:id="@+id/tvCuentaAvatarLetra"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="AN"
+                            android:gravity="center"
+                            android:textColor="#1E1B4B"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+                </androidx.cardview.widget.CardView>
+
+                <!-- Datos de Usuario -->
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginStart="16dp">
+
+                    <TextView
+                            android:id="@+id/tvCuentaNombre"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="an"
+                            android:textColor="#1E1B4B"
+                            android:textSize="22sp"
+                            android:textStyle="bold" />
+
+                    <TextView
+                            android:id="@+id/tvCuentaEmail"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="✉  an@gmail.com"
+                            android:textColor="#6B7280"
+                            android:textSize="14sp"
+                            android:layout_marginTop="2dp" />
+
+                    <!-- Badge Rol (Admin / Cliente) -->
+                    <TextView
+                            android:id="@+id/tvCuentaRolBadge"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="ADMIN"
+                            android:textColor="#FFFFFF"
+                            android:textSize="10sp"
+                            android:textStyle="bold"
+                            android:backgroundTint="#4F46E5"
+                            android:background="@android:color/holo_blue_dark"
+                            android:paddingHorizontal="8dp"
+                            android:paddingVertical="2dp"
+                            android:layout_marginTop="6dp" />
+
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- TÍTULO SECCIÓN: MI GARAJE -->
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="28dp"
+                android:layout_marginBottom="12dp">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="🏍  Mi Garaje"
+                    android:textColor="#1E1B4B"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+        </LinearLayout>
+
+        <!-- TARJETA DE VEHÍCULO (Ejemplo: MT-03 de image_5bf67b.png) -->
+        <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="3dp">
+
+            <!-- Borde lateral de color azul simulando la referencia web -->
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:background="#FFFFFF">
+
+                <View
+                        android:layout_width="6dp"
+                        android:layout_height="match_parent"
+                        android:background="#4F46E5" />
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                    <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                        <TextView
+                                android:id="@+id/tvMotoMarca"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="YAMAHA"
+                                android:textColor="#4F46E5"
+                                android:textSize="12sp"
+                                android:textStyle="bold" />
+
+                        <TextView
+                                android:id="@+id/tvMotoCilindraje"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:text="321 CC"
+                                android:textColor="#374151"
+                                android:textSize="11sp"
+                                android:textStyle="bold"
+                                android:background="#F3F4F6"
+                                android:paddingHorizontal="6dp"
+                                android:paddingVertical="2dp" />
+                    </RelativeLayout>
+
+                    <TextView
+                            android:id="@+id/tvMotoModelo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="MT-03"
+                            android:textColor="#1E1B4B"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            android:layout_marginTop="2dp" />
+
+                    <TextView
+                            android:id="@+id/tvMotoEstado"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="✓ Documentos al día"
+                            android:textColor="#10B981"
+                            android:textSize="12sp"
+                            android:textStyle="bold"
+                            android:layout_marginTop="8dp" />
+
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- ESPACIADOR EN BLANCO -->
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+        <!-- BOTÓN CERRAR SESIÓN -->
+        <Button
+                android:id="@+id/btnCuentaCerrarSesion"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginBottom="32dp"
+                android:layout_marginTop="16dp"
+                android:text="Cerrar Sesión"
+                android:textColor="#EF4444"
+                android:textSize="14sp"
+                android:backgroundTint="#FEE2E2"
+                android:stateListAnimator="@null" />
+
+    </LinearLayout>
+</ScrollView>

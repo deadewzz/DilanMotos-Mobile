@@ -12,31 +12,36 @@
 
         <!-- HEADER -->
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:background="#4F46E5"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingHorizontal="20dp"
-            android:elevation="6dp">
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:background="#4F46E5"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="20dp"
+                android:elevation="6dp">
 
             <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="DilanMotos"
-                android:textColor="#FFFFFF"
-                android:textSize="22sp"
-                android:textStyle="bold"
-                android:fontFamily="sans-serif-medium" />
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="DilanMotos"
+                    android:textColor="#FFFFFF"
+                    android:textSize="22sp"
+                    android:textStyle="bold"
+                    android:fontFamily="sans-serif-medium" />
 
             <TextView
-                android:id="@+id/tvBienvenida"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Hola, Usuario 👋"
-                android:textColor="#FFFFFF"
-                android:textSize="14sp" />
+                    android:id="@+id/tvBienvenida"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Hola, aeljoc ▼"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:padding="8dp" />
 
         </LinearLayout>
 

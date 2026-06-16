@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+            android:id="@+id/menu_mi_cuenta"
+            android:title="Mi Cuenta" />
+    <item
+            android:id="@+id/menu_asistente_ia"
+            android:title="Asistente IA" />
+    <item
+            android:id="@+id/menu_mi_historial"
+            android:title="Mi Historial" />
+    <item
+            android:id="@+id/menu_radicar_pqrs"
+            android:title="Radicar PQRS" />
+    <item
+            android:id="@+id/menu_hacer_cotizacion"
+            android:title="Hacer Cotización" />
+
+    <!-- Opción especial para ir al panel administrador -->
+    <item
+            android:id="@+id/menu_gestion_sistema"
+            android:title="Gestión de Sistema" />
+
+    <item
+            android:id="@+id/menu_cerrar_sesion"
+            android:title="Cerrar Sesión" />
+</menu>

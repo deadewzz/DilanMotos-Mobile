@@ -80,6 +80,14 @@
                 android:name=".MainActivity"
                 android:exported="false"/>
 
+        <activity
+                android:name=".ui.AdminActivity"
+                android:exported="false" />
+
+        <activity
+                android:name=".ui.MiCuentaActivity"
+                android:exported="false" />
+
     </application>
 
 </manifest>

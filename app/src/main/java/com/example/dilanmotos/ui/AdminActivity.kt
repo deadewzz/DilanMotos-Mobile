@@ -19,42 +19,48 @@ class AdminActivity : AppCompatActivity() {
 
         sessionManager = SessionManager(this)
 
-        // Verificar que el usuario siga siendo admin (seguridad extra)
         if (!sessionManager.isAdmin()) {
             startActivity(Intent(this, HomeActivity::class.java))
             finish()
             return
         }
 
-        findViewById<TextView>(R.id.tvAdminBienvenida).text =
-            "Panel Admin — ${sessionManager.getNombre()}"
+        // Cambiar título de bienvenida
+        findViewById<TextView>(R.id.tvAdminBienvenida)?.text = "Panel Admin — ${sessionManager.getNombre()}"
 
-        // Acceso a todos los módulos
-        findViewById<Button>(R.id.btnAdminUsuarios).setOnClickListener {
+        // Módulos con navegación segura (usando ?.setOnClickListener en lugar de .setOnClickListener)
+        findViewById<Button>(R.id.btnAdminUsuarios)?.setOnClickListener {
             startActivity(Intent(this, UsuarioActivity::class.java))
         }
 
-        findViewById<Button>(R.id.btnAdminMotos).setOnClickListener {
+        findViewById<Button>(R.id.btnAdminMotos)?.setOnClickListener {
             startActivity(Intent(this, MotoActivity::class.java))
         }
 
-        findViewById<Button>(R.id.btnAdminProductos).setOnClickListener {
+        findViewById<Button>(R.id.btnAdminProductos)?.setOnClickListener {
             startActivity(Intent(this, ProductoActivity::class.java))
         }
 
-        findViewById<Button>(R.id.btnAdminMarcas).setOnClickListener {
+        findViewById<Button>(R.id.btnAdminMarcas)?.setOnClickListener {
             startActivity(Intent(this, MarcaActivity::class.java))
         }
 
-        findViewById<Button>(R.id.btnAdminIA).setOnClickListener {
+        findViewById<Button>(R.id.btnAdminCotizaciones)?.setOnClickListener {
+            startActivity(Intent(this, CotizacionActivity::class.java))
+        }
+
+        findViewById<Button>(R.id.btnAdminIA)?.setOnClickListener {
             val intent = Intent(this, ChatIaActivity::class.java).apply {
                 putExtra("MODELO_MOTO", "Moto General")
             }
             startActivity(intent)
         }
 
-        // Cerrar sesión
-        findViewById<Button>(R.id.btnAdminCerrarSesion).setOnClickListener {
+        findViewById<Button>(R.id.btnVolverHome)?.setOnClickListener {
+            finish()
+        }
+
+        findViewById<Button>(R.id.btnAdminCerrarSesion)?.setOnClickListener {
             sessionManager.cerrarSesion()
             startActivity(Intent(this, LoginActivity::class.java))
             finish()
@@ -64,5 +70,5 @@ class AdminActivity : AppCompatActivity() {
     @Suppress("DEPRECATION")
     override fun onBackPressed() {
         super.onBackPressed()
-}
     }
+}
