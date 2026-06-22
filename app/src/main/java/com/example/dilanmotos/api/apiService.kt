@@ -79,11 +79,8 @@ interface ApiService {
     fun consultarIA(@Body request: ConsultaRequest): Call<IaResponse>
 
     // ==========================================
-
-// ENDPOINTS DE COTIZACION
-
-// ==========================================
-
+    // ENDPOINTS DE COTIZACION
+    // ==========================================
     @GET("api/cotizaciones")
     fun obtenerCotizacion(): Call<List<Cotizacion>>
 
@@ -98,4 +95,18 @@ interface ApiService {
         @Header("Authorization") token: String,
         @Path("id") id: Int
     ): Call<Void>
+
+    // ==========================================
+    // ENDPOINTS DE REFERENCIA
+    // ==========================================
+
+    @GET("api/referencias")
+    fun obtenerReferencias(): Call<List<Referencia>>
+
+    @POST("api/usuarios/recuperar-contrasena")
+    fun recuperarContrasena(@Body request: ForgotPasswordRequest): Call<Map<String, String>>
+
+    @POST("api/usuarios/resetear-contrasena")
+    fun resetearContrasena(@Body request: ResetPasswordRequest): Call<Map<String, String>>
 }
+

@@ -1,10 +1,10 @@
 package com.example.dilanmotos
 
-import android.content.Context // Importante para las SharedPreferences
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -14,7 +14,9 @@ import com.example.dilanmotos.api.ApiClient
 import com.example.dilanmotos.model.LoginRequest
 import com.example.dilanmotos.model.LoginResponse
 import com.example.dilanmotos.session.SessionManager
+import com.example.dilanmotos.ui.ForgotPasswordActivity
 import com.example.dilanmotos.ui.HomeActivity
+import com.example.dilanmotos.ui.RegisterActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -33,7 +35,6 @@ class LoginActivity : AppCompatActivity() {
 
         sessionManager = SessionManager(this)
 
-        // Si ya hay sesión activa, ir directo al home
         if (sessionManager.isSesionActiva()) {
             irAlHome()
             return
@@ -45,15 +46,23 @@ class LoginActivity : AppCompatActivity() {
             insets
         }
 
-        etCorreo = findViewById(R.id.etCorreoLogin)
+        etCorreo     = findViewById(R.id.etCorreoLogin)
         etContrasena = findViewById(R.id.etContrasenaLogin)
-        btnIngresar = findViewById(R.id.btnIngresar)
+        btnIngresar  = findViewById(R.id.btnIngresar)
 
         btnIngresar.setOnClickListener { ejecutarLogin() }
+
+        findViewById<TextView>(R.id.tvRegister).setOnClickListener {
+            startActivity(Intent(this, RegisterActivity::class.java))
+        }
+
+        findViewById<TextView>(R.id.tvForgotPassword).setOnClickListener {
+            startActivity(Intent(this, ForgotPasswordActivity::class.java))
+        }
     }
 
     private fun ejecutarLogin() {
-        val correo = etCorreo.text.toString().trim()
+        val correo     = etCorreo.text.toString().trim()
         val contrasena = etContrasena.text.toString().trim()
 
         if (correo.isEmpty() || contrasena.isEmpty()) {
@@ -66,10 +75,7 @@ class LoginActivity : AppCompatActivity() {
 
         ApiClient.apiService.login(LoginRequest(correo, contrasena))
             .enqueue(object : Callback<LoginResponse> {
-                override fun onResponse(
-                    call: Call<LoginResponse>,
-                    response: Response<LoginResponse>
-                ) {
+                override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
                     btnIngresar.isEnabled = true
                     btnIngresar.text = "Ingresar"
 
@@ -78,37 +84,24 @@ class LoginActivity : AppCompatActivity() {
 
                         sessionManager.guardarSesion(
                             idUsuario = loginData.idUsuario ?: -1,
-                            nombre = loginData.nombre,
-                            rol = loginData.rol,
-                            token = loginData.token
+                            nombre    = loginData.nombre,
+                            rol       = loginData.rol,
+                            token     = loginData.token
                         )
 
-                        Toast.makeText(
-                            this@LoginActivity,
-                            "Bienvenido ${loginData.nombre}",
-                            Toast.LENGTH_SHORT
-                        ).show()
-
+                        Toast.makeText(this@LoginActivity, "Bienvenido ${loginData.nombre}", Toast.LENGTH_SHORT).show()
                         irAlHome()
                         finish()
 
                     } else {
-                        Toast.makeText(
-                            this@LoginActivity,
-                            "Correo o contraseña incorrectos",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        Toast.makeText(this@LoginActivity, "Correo o contraseña incorrectos", Toast.LENGTH_SHORT).show()
                     }
                 }
 
                 override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
                     btnIngresar.isEnabled = true
                     btnIngresar.text = "Ingresar"
-                    Toast.makeText(
-                        this@LoginActivity,
-                        "Error de conexión: ${t.message}",
-                        Toast.LENGTH_LONG
-                    ).show()
+                    Toast.makeText(this@LoginActivity, "Error de conexión: ${t.message}", Toast.LENGTH_LONG).show()
                 }
             })
     }

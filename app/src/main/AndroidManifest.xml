@@ -24,6 +24,13 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
+        <activity android:name=".ui.ForgotPasswordActivity"/>
+
+        <activity android:name=".ui.ResetPasswordActivity"/>
+
+        <activity android:name=".ui.RegisterActivity"/>
+
         <activity
                 android:name=".ui.ChatIaActivity"
                 android:exported="false" />
