@@ -1,5 +1,6 @@
 package com.example.dilanmotos
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
@@ -32,6 +33,9 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_login)
+
+        // 1. Registrar el contexto en el ApiClient para solucionar el desfase del token
+        ApiClient.registrarContexto(this)
 
         sessionManager = SessionManager(this)
 
@@ -82,17 +86,16 @@ class LoginActivity : AppCompatActivity() {
                     if (response.isSuccessful && response.body() != null) {
                         val loginData = response.body()!!
 
+                        // El SessionManager guarda bajo "token_sesion" en el archivo "DilanMotosPrefs"
                         sessionManager.guardarSesion(
                             idUsuario = loginData.idUsuario ?: -1,
-                            nombre    = loginData.nombre,
-                            rol       = loginData.rol,
-                            token     = loginData.token
+                            nombre    = loginData.nombre ?: "",
+                            rol       = loginData.rol ?: "",
+                            token     = loginData.token ?: ""
                         )
 
                         Toast.makeText(this@LoginActivity, "Bienvenido ${loginData.nombre}", Toast.LENGTH_SHORT).show()
                         irAlHome()
-                        finish()
-
                     } else {
                         Toast.makeText(this@LoginActivity, "Correo o contraseña incorrectos", Toast.LENGTH_SHORT).show()
                     }
